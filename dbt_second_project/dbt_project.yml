@@ -1,0 +1,35 @@
+name: 'dbt_second_project'
+version: '1.0.0'
+
+profile: 'dbt_second_project'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  dbt_second_project:
+    staging:
+      +schema: stg
+      +materialized: table
+      +tags: ['staging']
+    intermediate:
+      +schema: int
+      +materialized: ephemeral
+      +tags: ['intermediate']
+    marts:
+      +schema: mrt
+      +materialized: table
+      +tags: ['marts']
+
+seeds:
+  dbt_second_project:
+    +schema: raw
+    +tags: ['seeds']
