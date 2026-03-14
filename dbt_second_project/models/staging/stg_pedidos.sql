@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized='incremental'
+    )
+}}
+
 with source as (
     select
     *
@@ -6,3 +12,6 @@ with source as (
 select
     *
 from source
+{% if is_incremental() %}
+    where data_pedido>= (select max(data_pedido) from {{this}} )
+{% endif %}
